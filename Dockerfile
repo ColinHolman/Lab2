@@ -24,5 +24,6 @@ RUN pip3 install --upgrade pip; \
     ansible-galaxy collection install f5networks.f5_modules; \
     git config --global user.name "ColinHolman"; \
     git config --global user.email "holmanw@sheridancollege.ca"; \
+    git clone https://github.com/ColinHolman/Lab2_CHolman.git /work/;
 
 WORKDIR /work
