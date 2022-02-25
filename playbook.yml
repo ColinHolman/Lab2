@@ -1,6 +1,0 @@
----
-- hosts: localhost
-
-  tasks:
-    - name: testing hello world
-      shell: echo "Hello World!"
