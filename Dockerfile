@@ -18,10 +18,12 @@ RUN pip3 install --upgrade pip; \
     pip3 install paramiko; \
     pip3 install jmspath; \
     pip3 install requests; \
+    pip install awscli --upgrade --user; \
     ansible-galaxy collection install cisco.ios; \
     ansible-galaxy collection install cisco.iosxr; \
     ansible-galaxy collection install juniper.device; \
     ansible-galaxy collection install f5networks.f5_modules; \
+    ansible-galaxy collection install community.aws; \
     git config --global user.name "ColinHolman"; \
     git config --global user.email "cholman27@gmail.com"; \ 
     git clone https://github.com/ColinHolman/Lab2_CHolman.git /work/;
