@@ -1,42 +1,30 @@
 ---
-#author : Colin Holman
 
-- name: ELB and EC2 Provision
-  hosts: localhost
-  gather_facts: no
-  connection: local
-  vars_files:
-    - vars/aws-vars.yml
-  vars:
-    aws_boto_profile: ansible
+- hosts: localhost
   tasks:
-    - name: Create Security Group
-      include_role:
-        name: aws-create-sg
-      tags: sgcreate
-    
-    - name: Create ELB
-      include_role:
-        name: aws-create-elb
-      tags: targetgrpcreate  
+    - name: Get my current IP address     
+      uri:
+        url: http://checkip.amazonaws.com/
+        return_content: yes
+      register: my_ip
 
-    - name: Create ec2 instances
-      include_role:
-        name: ec2-create
-      tags: ec2create
-
-- name: Deploy Webserver to EC2 instances
-  hosts: ec2webservers
-  remote_user: ec2-user
-  become: true
-  tasks:
-    - name: Deploy Web service
-      include_role: 
-        name: deploy-web-server
-
-- name: IaC Summary
-  hosts: localhost
-  tasks:
-    - debug:
-        msg: "Website is accessible on Appication ELB: {{ elb_public_dns }} (It may take some time to get the backend instance to come InService)"
- 
+    - name: Create simple security group
+      ec2_group:
+        name: webservers
+        description: A security group for my current IP
+        region: us-east-1
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: "{{ my_ip.content | replace('\n', '') }}/32"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{ my_ip.content | replace('\n', '') }}/32"
+        rules_egress:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: webservers_group

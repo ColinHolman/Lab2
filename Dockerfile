@@ -18,7 +18,8 @@ RUN pip3 install --upgrade pip; \
     pip3 install paramiko; \
     pip3 install jmspath; \
     pip3 install requests; \
-    pip install awscli --upgrade --user; \
+    pip3 install awscli --upgrade --user; \
+    pip3 install boto; \
     ansible-galaxy collection install cisco.ios; \
     ansible-galaxy collection install cisco.iosxr; \
     ansible-galaxy collection install juniper.device; \

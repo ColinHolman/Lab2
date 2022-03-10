@@ -1,0 +1,11 @@
+#!/bin/bash
+sudo yum check-update
+sudo yum install -y gcc libffi-devel python3 epel-release
+sudo yum install -y git
+sudo yum install tree
+sudo amazon-linux-extras install ansible2
+sudo yum install -y jq
+sudo amazon-linux-extras install nginx1
+ansible-galaxy collection install community.aws
+sudo yum install httpd -y
+sudo yum install firewalld -y
