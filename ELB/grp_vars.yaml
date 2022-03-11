@@ -1,0 +1,11 @@
+---
+keypair: ansible2
+instance_type: t2.micro
+image: ami-04505e74c0741db8d
+wait: yes
+group: webserver
+count: 3
+region: us-east-1
+security_group: test-sec-grp
+ap_zone1: us-east-1a
+ap_zone2: us-east-1b

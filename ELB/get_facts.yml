@@ -1,0 +1,26 @@
+---
+ - name: ELB Gather Facts
+   hosts: localhost
+   connection: local
+   gather_facts: True
+   vars_files:
+     - grp_vars.yaml
+
+   tasks:
+# Task created to get facts for Load Balancer
+   - community.aws.elb_classic_lb_info:
+       region: us-east-1
+     register: elb_info
+# Task to display Load Balancer Facts
+   - ansible.builtin.debug:
+       msg: "{{ item.dns_name }}"
+     loop: "{{ elb_info.elbs }}"
+#Task to get Webserver facts    
+   - name: Gather Webserver(EC2 Instance) facts
+     ec2_instance_info:
+       region: us-east-1
+     register: ec2_info
+#task to display webserver facts     
+   - name: Display EC2
+     debug:
+       msg: "{{ item }}"
