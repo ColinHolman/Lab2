@@ -1,1 +1,1 @@
-# Lab2
+# Lab2 for AWS Automation
